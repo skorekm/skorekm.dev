@@ -1,0 +1,124 @@
+---
+title: "React Project Structure: Approach for Clean, Scalable Code"
+date: "October 6, 2024"
+excerpt: "A guide on organizing React projects based on their size and complexity."
+slug: "structuring-react-projects"
+tags: ["React", "Software Architecture"]
+---
+
+As the project grows, maintaining a clean codebase becomes a challenge. Without the preliminary approach to organizing components, projects can quickly become messy, making them difficult to work with and debug.
+
+The key to avoiding these pitfalls lies in establishing a clear and consistent structure of the components from the very beginning. This makes projects more manageable to work with and easier to maintain in the long run.
+
+In this article, I'll explain approaches to structuring React projects based on their size. It helps to streamline the workflow and maintain projects without the overhead. Dear Reader, consider this article a guide you can follow or adapt to fit your project's needs. Without further ado, let's jump right on it.
+
+## Folder Structure
+
+When building a Web application, organizing the project's folder structure is crucial, although it can sometimes be confusing. Below, I'll mention two widely used approaches to organizing, which I also use in my projects.
+
+### Organizing by Feature (Domain-Driven Structure)
+
+In this approach, folders are grouped by the particular feature or section of your application. Each folder contains everything related to that feature, meaning components, styles, tests, interfaces, utilities, etc.
+
+The folder structure might look like this:
+
+/src
+/features
+/auth
+/components
+/forms
+/login
+LoginForm.tsx
+LoginForm.interface.tsx
+LoginForm.helpers.tsx
+/hooks
+useAuth.ts
+/utils
+hashPassword.ts
+
+The presented structure contains the features folder, and auth inside. Then, we further organize the structure, separating components, hooks, and utilities in the scope of the auth folder.
+
+This approach, as with everything, has its pros and cons. I'll list some of both.
+
+**Pros:**
+
+- **Modularity and Isolation** — Each feature is isolated with its components, styles, etc. This makes it easy to work on a specific feature without affecting other parts of the app.
+- **Scalability** — This structure scales very well for large applications. When a new feature appears in the app, you simply add a new folder and put everything there.
+- **Readability and Ramp-up** — This folder structure allows new team members to quickly visualize what to expect on each of the application's screens. It promotes thinking in terms of features rather than individual components.
+
+**Cons:**
+
+- **Reusability** — While the structure is great for isolation, it gets problematic when different features need to share common components, utilities, etc. In that scenario, you might end up with duplicated code.
+- **Deep folder nesting** — As the feature grows, the folder structure might become deeply nested, making it slightly harder to find specific files.
+
+### Organizing by Type (Type-Based Structure)
+
+Another approach involves organizing folders based on the type of entity, such as components, hooks, etc.
+
+Here's an example:
+
+src/content/posts/structuring-react-projects.mdx
+/src
+/components
+/atoms
+Button.tsx
+/molecules
+LabelInput.tsx
+/organisms
+LoginForm.tsx
+/pages
+Login.tsx
+/hooks
+useAuth.ts
+/utils
+hashPassword.ts
+
+This way, components, hooks, and utils are in separate folders. It's more suitable for smaller applications or ones that share many components across different features. As per the components folder, I would suggest an Atomic Design Pattern. It's a methodology for creating design systems with reusable components. It breaks down components into five categories:
+
+- **Atoms** — The smallest building blocks, such as a Button or an Input.
+- **Molecules** — It's a combination of atoms working together. For instance, it might be a form input with a label.
+- **Organisms** — Those are more complex sections of the UI, which are made up of molecules. For example, the Login form.
+- **Templates** — It's the page-level layout, which contains organisms and components in a consistent format.
+- **Pages** — It's the final page that the user interacts with.
+
+This pattern includes five categories, but you can tailor it to your needs. This approach is indifferent and has pros and cons.
+
+**Pros:**
+
+- **Flat folder structure** — This approach is straightforward, especially for smaller projects with many shared components. It also results in a flatter folder structure, making it easier to navigate.
+- **Reusability** — When organizing by type, it's easier to think about reusability. This encourages the creation of shared and generic functions, which, in summary, reduce code duplication.
+- **Separation of concerns** — In this structure, it's easier to keep files that contain data management logic separate from the presentational layer and business logic. It enforces a clear distinction between different layers of application.
+
+**Cons:**
+
+- **Challenging to scale** — As the project scales, having all of the files grouped by type can become overwhelming. For instance, having a dozen files in the hooks folder might become hard to navigate, and the folder can become cluttered.
+- **Context switching** — When working on a particular hook or component, it might be harder to immediately understand the context of where and how it's going to be used.
+- **Lack of feature isolation** — With this approach, it's harder to keep the logic isolated. If a developer needs to work on a particular feature such as auth, they'll have to browse through multiple folders to find needed files.
+
+## What's the Right Approach?
+
+Both the Feature-based and Type-based approaches have their strengths, but each works best in different contexts. Let's dive deeper into when you should consider using which approach.
+
+### Organizing by Feature (Domain-Driven Structure)
+
+This approach works very well when you're working on a large application where different features work independently. For example, an e-commerce application may have separate areas like auth, products, cart, and orders. Each section would have its own components, utilities, and hooks. Organizing by feature helps to keep everything related to a feature together, which is essential for maintainability and scalability.
+
+**When to use it:**
+
+- Large applications with clearly defined features.
+- When teams are working on independent parts of the application.
+- The application is expected to grow and scale, requiring modularity.
+
+### Organizing by Type (Type-Based Structure)
+
+This structure is better suited for smaller projects with many reusable components. Instead of grouping files by feature, you organize them by type (e.g. components, hooks, or utilities) regardless of what part of the application they belong to. It works well for applications that rely heavily on shared components.
+
+**When to use it:**
+
+- Small to medium-sized applications with lots of shared components.
+- Projects where simplicity and ease of navigation are key.
+- Early-phase or proof-of-concept projects.
+
+## Summary
+
+Each approach has its pros and cons, and choosing the right one depends on the size of your team and the complexity of your application. For large, scalable projects, organizing by feature is often more effective, while smaller projects usually benefit from organizing by type. Beyond selecting the structure, it's crucial to involve your team in the decision-making process. Team members may be familiar with different structures, so discussing the benefits and potential drawbacks of each option is essential to ensure alignment and improve collaboration.
