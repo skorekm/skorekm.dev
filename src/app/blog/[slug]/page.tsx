@@ -1,13 +1,11 @@
 import { getPostBySlug, getPostsSlugs } from "@/lib/posts"
-import { serialize } from "next-mdx-remote/serialize"
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMdxById } from "@/lib/markdown"
-import { MDXContent } from "@/components/ui/markdownContent"
 import { Tag } from "@/components/ui/tag";
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { frontmatter, content } = await getMdxById('posts', slug);
-  const mdxSource = await serialize(content);
 
   return (
       <main className="max-w-2xl mx-auto px-6 py-16">
@@ -27,7 +25,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           </header>
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <MDXContent source={mdxSource} />
+            <MDXRemote source={content} />
           </div>
         </article>
       </main>
