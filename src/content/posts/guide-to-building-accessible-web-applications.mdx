@@ -1,0 +1,92 @@
+---
+title: "Guide to Building Accessible Web Applications"
+date: "September 6, 2024"
+excerpt: "An in-depth guide on web accessibility, focusing on WCAG principles and practical tips for developers."
+slug: "guide-to-building-accessible-web-applications"
+readingTime: "6 min"
+tags: ["Accessibility", "Web Development", "WCAG"]
+---
+
+The importance of web accessibility cannot be overstated in the modern digital landscape. Making sure that web applications are accessible to all users, including those with disabilities, is not just a matter of compliance with standards. It also reflects good application design and can help increase lighthouse scores. This article dives into Web Content Accessibility Guidelines (WCAG), building accessible web applications, incorporating accessibility principles, practical tips, and tools for testing and maintaining accessibility standards.
+
+## Principles and Importance of the Web Accessibility
+
+Web accessibility refers to the practice of designing and developing web applications that are usable by people of all abilities and disabilities. To highlight the importance of making web applications accessible, the World Wide Web Consortium (W3C) developed the Web Content Accessibility Guidelines (WCAG), which are structured around four core principles, which can be remembered by the acronym **POUR**.
+
+### Core Principles (POUR)
+
+- **Perceivable**: Ensure the content is accessible to all users by providing text alternatives for non-text content, adding captions for the multimedia, and ensuring proper use of color and contrast.
+- **Operable**: Ensure all functionality is accessible via the keyboard and that users have sufficient time to interact with the content.
+- **Understandable**: Ensure that content and controls are easy to understand and use.
+- **Robust**: Ensure the content is compatible with various user agents and assistive technologies.
+
+## WCAG Versions and Compliance Levels
+
+WCAG has evolved over the years to keep pace with technological advancement. Here's the breakdown:
+
+- **WCAG 2.0**, released in 2008, set the foundation for web accessibility.
+- **WCAG 2.1**, released in 2018, was built upon the 2.0 version and incorporates guidelines for mobile accessibility, cognitive disability, and low vision.
+- **WCAG 2.2**, released in October 2023, builds upon previous versions, enhancing accessibility, for example, for users with cognitive abilities. It also improves the touch-target sizes on mobile devices.
+
+WCAG is also structured around three levels of compliance—A, AA, and AAA. Each level represents a different degree of accessibility.
+
+### Level A
+
+It's the most basic level of compliance. Its purpose is to address the most critical barrier that could prevent users with disabilities from accessing the content. At this level, it's crucial to ensure that web content is technically accessible. Some key features include:
+
+- **Text Alternatives** — All non-text content must have a text alternative so that screen readers and other assistive technologies can detect that.
+- **Keyboard Accessibility** — The website should be navigable using a keyboard.
+- **Flashing Content** — There is no content that flashes more than three times in any one-second period.
+- **Labels and Instructions** — Accurate labels and instructions should be provided for user input fields.
+
+### Level AA
+
+This is the most commonly targeted compliance level for organizations as it balances between accessibility and practicality. Its goal is to make content accessible to those with visual, auditory, or cognitive abilities. Some key features include:
+
+- **Color Contrast** — Text and images must have a contrast ratio of at least 4.5:1.
+- **Resizable Text** — Users should be able to resize the text up to 200% without loss of content or functionality.
+- **Target size** — The size of that target pointer input is at least 24 by 24 pixels (with some exceptions).
+- **Audio Control** — In case there's audio that plays automatically for more than 3 seconds, users should be able to pause and control the volume of the audio.
+- **Consistent Navigation** — If the page has navigation across subpages, they should appear in a consistent order, helping users predict where to look for the content.
+
+### Level AAA
+
+The last level, as you may expect, is the strictest of them all. It's also the most comprehensive one. Its aim is to make content accessible to the widest possible audience. Whereas it is noble to aim for this level, it's very challenging and is often not a legal requirement. The key features of the AAA level are:
+
+- **Enhanced Contrast** — Text and images must have a contrast ratio of at least 7:1 against the background (with some exceptions).
+- **Reading level** — Content that is more complex than a lower secondary education reading level should have a simplified alternative.
+- **Focus Appearance** — The focus indicator needs to be at least as large as 2 pixels on the thick perimeter of the unfocused component and needs a contrast ratio of at least 3:1 between the same pixels in the focused and unfocused states.
+- **Contextual Help** — Users interacting with complex or non-standard parts of the website should have contextual help.
+
+There's way more. Here's the official website for more reference:
+
+## Some of the Practical Tips
+
+As we have already seen, compliance levels can be difficult and require a keen eye for details. Here are some practical tips that developers should always have in mind while writing the code:
+
+1. **Use Semantic HTML**  
+   Semantic HTML is the foundation of accessible web design. By using the correct HTML elements for their intended purpose (e.g., `<header>`, `<nav>`, `<article>`, `<section>`), it ensures that assistive technologies like screen readers can accurately interpret and present content to users. This also helps improve the overall structure and readability of the code.
+
+2. **Provide Text Alternatives**  
+   All non-text content, such as images, videos, and infographics, should have text alternatives. For images, use the `alt` attribute to provide descriptive text. For videos, include captions and transcripts. This ensures that users who cannot see or hear the content can still access the information.
+
+3. **Ensure Keyboard Accessibility**  
+   A significant amount of users rely on keyboards rather than a mouse to navigate the web. To support these users, make sure that all interactive elements (e.g., links, buttons, form controls) are accessible via the keyboard. This can be tested by navigating through the application using the Tab key and ensuring that all elements are reachable and usable.
+
+4. **Use ARIA (Accessible Rich Internet Applications) Landmarks and Roles**  
+   ARIA landmarks and roles can enhance the application's accessibility by providing additional context to screen readers. Use ARIA roles to define the purpose of UI components (e.g., `role="button"` for buttons, `role="navigation"` for navigation menus) and landmarks to identify key sections of a page (e.g., `role="main"` for the main content area).
+
+5. **Create Accessible Forms**  
+   Forms are a critical part of many web applications, and accessibility issues can be particularly challenging for users. Make sure that form fields are properly labeled using the `label` element, provide instructions and error messages that are easy to understand. Additionally, use fieldsets alongside legends to group related fields.
+
+## Tools and Techniques for Testing and Maintaining Accessibility
+
+- **Lighthouse**: The first tool that comes to mind when testing various aspects of the web application is Lighthouse. Even though automatic detection does not guarantee that you will find all of the opportunities to improve the website's accessibility, it sets a solid foundation.
+- **Pa11y**: It's an open-source accessibility testing tool that can help ensure that the web applications comply with accessibility standards. It offers automated scanning of web pages to detect common accessibility issues, such as missing alt attributes, insufficient color contrast, and improper ARIA roles.
+- **AccessLint**: This tool allows us to find accessibility issues in the Pull Request, which means it's encoded into the development workflow. It's super handy, and it runs a growing list of WCAG tests. Unfortunately, only the Hobbyist version is free. The standard version costs $49/month.
+- **eslint-plugin-jsx-a11y**: It's a plugin that is easily integrable into the codebase. There are also versions for Vue and many more. It does a static evaluation of the JSX to spot accessibility issues in React apps.
+- **@axe-core/react**: This tool allows the testing of the React application with the axe-core accessibility testing library. It pairs well with the eslint-plugin mentioned above. Results will show up in the Chrome DevTools console. Sadly, it does not support React 18. According to the note on their Github, it's recommended to explore the tool called axe Developer Hub.
+
+## Beyond Coding
+
+It's important to remember that building accessible web applications is not solely the responsibility of developers. It's an effort of the whole team. Designers play a foundational role in creating user-friendly interfaces with rules such as Color Contrast in mind. Content creators need to ensure that information is presented in a clear and accessible manner. Also, the QA engineers are crucial in heavy testing for accessibility compliance.
