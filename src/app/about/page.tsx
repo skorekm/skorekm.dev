@@ -5,17 +5,23 @@ export default function About() {
         <h1 className="text-3xl font-medium text-neutral-900 dark:text-neutral-50">About Me</h1>
         <div className="prose prose-neutral dark:prose-invert max-w-none">
           <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            I&apos;m a writer and designer focused on creating meaningful digital experiences. My work explores the
-            intersection of minimalism, technology, and human connection. Through my writing, I aim to share insights
-            and spark conversations about design, creativity, and the future of digital communication.
+            Hey there! I&apos;m Marcin, a developer based in Wrocław, Poland.
+            I mostly work with JavaScript, and my favorite projects are the ones that actually help someone.
+            Whether crafting user interfaces or solving backend problems, I enjoy the whole process—from figuring things out to seeing it all come together.
           </p>
           <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            With a background in both design and development, I bring a unique perspective to my work. I believe in
-            the power of simplicity and the importance of thoughtful design in our increasingly digital world.
+            When I&apos;m not coding, you&apos;ll probably find me outdoors – 
+            I love exploring the mountains or staying active. 
+            Hiking, running, or just being outside keeps me energized and balanced.
           </p>
           <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            When I&apos;m not writing or designing, you can find me exploring new technologies, reading about design
-            theory, or experimenting with different creative approaches to problem-solving.
+            Oh, fun fact about Wrocław: we have a ton of bridges.
+            Also, we&apos;ve got a whole bunch of gnome statues scattered everywhere – 
+            they&apos;re kinda like our unofficial mascot. Seriously, google it!
+          </p>
+          <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Feel free to reach out if you want to connect, collaborate,
+            or chat about tech!
           </p>
         </div>
       </section>
