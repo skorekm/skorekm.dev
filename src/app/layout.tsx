@@ -2,7 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
-import { ThemeProvider } from "@/app/providers/theme-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
 import { Footer } from "@/components/ui/footer"
 import { Header } from "@/components/ui/header"
 
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="icon" href="./favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col bg-[#f5f3f0] dark:bg-[#1a1a1a] text-[#4a4a4a] dark:text-[#e0e0e0] transition-colors duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>

@@ -1,11 +1,10 @@
 import { getPostBySlug, getPostsSlugs } from "@/lib/posts"
-import { MDXContent } from "@/components/ui/markdownContent"
 import { serialize } from "next-mdx-remote/serialize"
 import { getMdxById } from "@/lib/markdown"
+import { MDXContent } from "@/components/ui/markdownContent"
 import { Tag } from "@/components/ui/tag";
 
-
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { frontmatter, content } = await getMdxById('posts', slug);
   const mdxSource = await serialize(content);
@@ -40,7 +39,7 @@ export async function generateStaticParams() {
   return slugs.map((slug: string) => ({ slug }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { frontmatter } = await getPostBySlug(slug)
 
