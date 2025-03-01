@@ -1,0 +1,196 @@
+---
+title: "Type coercion in JavaScript: That one quirky friend you never knew you had"
+excerpt: "Picture this: it's Friday afternoon, and I am hunched over my laptop making a production release (because that's when it's supposed to happen, duh). I can almost taste the weekend — a cozy evening"
+date: "February 27, 2025"
+slug: "type-coercion-in-javascript"
+readingTime: "5 min"
+tags: ["javascript", "web development", "fundamentals"]
+---
+
+Picture this: it's Friday afternoon, and I am hunched over my laptop making a production release (because that's when it's supposed to happen, duh). I can almost taste the weekend — a cozy evening binging my favorite TV show. My code? Flawless. Or so I thought. But there it is, JavaScript starting a party I was not invited to:
+
+```javascript
+const myAge = "28";
+const currentYear = "2025";
+const iWannaRetireAt = 50;
+const expectedRetirementYear = currentYear + (iWannaRetireAt - myAge);
+console.log(expectedRetirementYear); // "202522" !?
+```
+
+
+My face goes stone cold, and my only thought is, "You serious!?" (I wanna retire at 50. Leave me alone).
+
+If this sounds familiar, this article might be for you. Well, not the production release on a Friday bit. 
+We all know it's forbidden. I meant the super realistic coercion example, 
+which was definitely not made up for the purpose of the introduction. 
+So, as you might have already guessed, we will dive into the secret sauce of JavaScript 
+that made a lot of memes across the internet — Type coercion.
+
+## JavaScript: Misunderstood Genius or Mad Scientist?
+
+JavaScript type coercion is its way of transforming values from one type to another. Sometimes it's helpful. 
+Sometimes, it makes you question your life choices. But understanding it can save you hours of debugging.
+
+There are two main types: implicit coercion, where JavaScript does the magic for you, 
+and explicit coercion, where you take the reins.
+
+Okay, let's break this down.
+
+## Implicit Coercion
+
+It's JS's way of saying, "Don't worry, my friend. I have your back." It's with you for better or worse. It happens in arithmetic operations, logical contexts, and comparisons. Let's explore some examples.
+
+### Arithmetic Operations
+
+Have you ever wondered why **"5" + 2** gives **52**? Well, I am gonna spill the tea: in the early days, devs concatenated text more often than they did math. Therefore, **+** became a dual-purpose operator, and it can perform string concatenation and arithmetic additions.
+
+Okay, in such a case, why does **-** act normal? Because subtraction makes sense with numbers, not strings.
+
+```javascript
+"5" - 2; // 3 (string → number)
+"5" + 2; // "52" (number → string)
+[] + 5; // "5" (array → string)
+```
+
+### Logical Contexts
+
+In logical contexts, values become true or false. 
+For instance, a non-empty string equals to true, 
+while 0 is false. But what about "0"? Yep, it's true too!
+
+```javascript
+if ("hello") { / runs / } // non-empty string => truthy
+if (0) { / does not run / } // 0 => falsy
+if ("0") { / runs! / } // "0" is a string, party time!
+```
+
+### Loose Equality (==)
+
+If the values have different types, JavaScript attempts to mediate by converting them to a common type before making the comparison. To be more precise, it tries to cast the values into a number.
+
+```javascript
+"5" == 5;       // true (string => number)
+[] == 0;        // true (array => "" => 0)
+"0" == false;   // true ("0" => 0, false => 0)
+```
+
+Extra note about null and undefined, they are equal, let's leave it like that.
+
+```javascript
+null == undefined; // true (this one is special case)
+```
+
+## Objects: Let's party!
+
+When comparing objects to other values, JavaScript does not throw the towel but tries actually to figure this out. It goes through this routine:
+
+1. It tries calling this particular method on the object **valueOf()**. This essentially asks, "Hey, what's your value?". If it returns a primitive (number, string, etc.), calm — all great.
+2. Although, if **valueOf()** does not return a primitive (or a method does not exist), JavaScript tries a **toString()** method. It's a plan B called "Got it, how about you tell me what you look like as a string?"
+3. But what happens if neither works? Well, the comparison fails.
+
+Let's see some examples:
+
+```javascript
+const coolWord = {
+  value: "Bazinga",
+  toString() {
+    return this.value;
+  }
+};
+
+console.log(coolWord == "Bazinga"); // true
+
+const someCounter = {
+  count: 2020,
+  valueOf() {
+    return this.count;
+  }
+};
+
+console.log(someCounter == 2020); // true
+```
+
+So, what happens when the object does not have those methods? Well, JavaScript cannot parse it to primitive, so it's always false.
+
+```javascript
+const someObject = {};
+console.log(someObject.toString()) // "[object Object]"
+console.log(someObject.valueOf()) // {}
+console.log(someObject == 'something') // false
+```
+
+And what about arrays? They are objects under the hood, so the above rules apply. Quick examples:
+
+```javascript
+console.log([1, 2, 3] == "1,2,3"); // true [1, 2, 3].toString() => "1,2,3"
+console.log([42] == 42); // true [42].toString() => "42" => 42
+console.log([] == 0); // true [].toString() => "" => 0
+```
+
+## Explicit Coercion
+
+Now that you have seen how JavaScript attempts to be helpful 
+(like that one friend who swears they know a shortcut), 
+let's talk about explicit coercion—when you grab the wheel and say, 
+"Alright, I got this.". 
+You can convert types using functions like **Number()**, **String()**, and **Boolean()**. Check this out.
+
+Converting to a number? Easy peasy.
+
+```javascript
+console.log(Number("120")); // 120
+console.log(parseInt("120px")); // 120 - ignores characters in the end
+console.log(parseFloat("3.14someText")); // 3.14 - as above
+```
+
+Converting to a string? I got you!
+
+```javascript
+console.log(String(22)) // "22"
+```
+
+Would you like to convert it to a boolean? Be my guest!
+
+```javascript
+console.log(Boolean(1)); // true
+console.log(Boolean(0)); // false
+console.log(Boolean("Bazinga!")); // true
+console.log(Boolean("")); // false
+```
+
+There's also this thing called bang (**!**), which is shorthand for converting to a boolean. You can use double bang (**!!**) as well.
+
+```javascript
+console.log(!"Bazinga!"); // false - A bang sign
+console.log(!!"Bazinga!"); // true - Double bang
+```
+
+## NaN: The quirkiest of them all
+
+So, what happens when JavaScript can't convert a string to a number? 
+Well, it shows the "I give up" flag. So, **NaN** stands for "not a number". 
+The irony? **NaN** is actually a number type. And here's a fun fact: **NaN == NaN** is **false**,
+ because each **NaN** is unique.
+
+Remember the example with **parseInt** and **parseFloat**? I have mentioned that it removes non-numeric characters from the end. What happens when you try to coerce a value that indeed has numbers but starts with a string? It becomes **NaN**. Let's go through the examples:
+
+```javascript
+console.log(typeof NaN); // "number" (yeah... no comment)
+console.log(NaN === NaN); // false (they are all snowflakes, unique)
+console.log(Number("Bazinga!")); // NaN
+console.log(parseFloat("Bazinga123")); // NaN
+console.log(parseInt("Bazinga123")); // NaN
+```
+
+## Love it or hate it, JavaScript coercion stays
+
+Okay, here it is — JavaScript's type coercion in all its quirky glory. Sure, it can be confusing. Annoying? Of course. Fascinating? Duh.
+
+Also, let's not forget about some of the weirdly useful things we get. Who did not create a conditional using **if(str.length > 0)**? Exactly…
+
+So, next time JavaScript surprises you with **NaN** or anything weird, take a breath. Pour yourself a glass of water, and remember: coercion is not out there to get you. It's just trying to be its weird self.
+
+Also, a pro tip: Use **===** unless you enjoy existential crises.
+
+Till the next time, thanks!
+

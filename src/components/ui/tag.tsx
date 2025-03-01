@@ -3,7 +3,7 @@ export const Tag = ({ tag }: { tag: string }) => {
     <span
       key={tag}
       className="inline-flex items-center px-3 py-1 rounded-full 
-        bg-accent/10 text-accent-foreground 
+        bg-accent/10 text-accent-foreground text-sm
         transition-all duration-200 cursor-pointer
         "
     >
