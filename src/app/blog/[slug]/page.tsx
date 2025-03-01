@@ -1,7 +1,7 @@
 import { getPostBySlug, getPostsSlugs } from "@/lib/posts"
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMdxById } from "@/lib/markdown"
 import { Tag } from "@/components/ui/tag";
+import { MdxContent } from "@/components/ui/mdx-content";
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -25,7 +25,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           </header>
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <MDXRemote source={content} />
+            <MdxContent content={content} />
           </div>
         </article>
       </main>

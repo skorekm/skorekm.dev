@@ -42,9 +42,9 @@ It's JS's way of saying, "Don't worry, my friend. I have your back." It's with y
 
 ### Arithmetic Operations
 
-Have you ever wondered why `"5" + 2` gives `52`? Well, I am gonna spill the tea: in the early days, devs concatenated text more often than they did math. Therefore, `+` became a dual-purpose operator, and it can perform string concatenation and arithmetic additions.
+Have you ever wondered why **"5" + 2** gives **52**? Well, I am gonna spill the tea: in the early days, devs concatenated text more often than they did math. Therefore, **+** became a dual-purpose operator, and it can perform string concatenation and arithmetic additions.
 
-Okay, in such a case, why does `-` act normal? Because subtraction makes sense with numbers, not strings.
+Okay, in such a case, why does **-** act normal? Because subtraction makes sense with numbers, not strings.
 
 ```javascript
 "5" - 2; // 3 (string → number)
@@ -84,8 +84,8 @@ null == undefined; // true (this one is special case)
 
 When comparing objects to other values, JavaScript does not throw the towel but tries actually to figure this out. It goes through this routine:
 
-1. It tries calling this particular method on the object `valueOf()`. This essentially asks, "Hey, what's your value?". If it returns a primitive (number, string, etc.), calm — all great.
-2. Although, if `valueOf()` does not return a primitive (or a method does not exist), JavaScript tries a `toString()` method. It's a plan B called "Got it, how about you tell me what you look like as a string?"
+1. It tries calling this particular method on the object **valueOf()**. This essentially asks, "Hey, what's your value?". If it returns a primitive (number, string, etc.), calm — all great.
+2. Although, if **valueOf()** does not return a primitive (or a method does not exist), JavaScript tries a **toString()** method. It's a plan B called "Got it, how about you tell me what you look like as a string?"
 3. But what happens if neither works? Well, the comparison fails.
 
 Let's see some examples:
@@ -129,7 +129,11 @@ console.log([] == 0); // true [].toString() => "" => 0
 
 ## Explicit Coercion
 
-Now that you have seen how JavaScript attempts to be helpful (like that one friend who swears they know a shortcut), let's talk about explicit coercion—when you grab the wheel and say, "Alright, I got this.". You can convert types using functions like `Number()`, `String()`, and `Boolean()`. Check this out.
+Now that you have seen how JavaScript attempts to be helpful 
+(like that one friend who swears they know a shortcut), 
+let's talk about explicit coercion—when you grab the wheel and say, 
+"Alright, I got this.". 
+You can convert types using functions like **Number()**, **String()**, and **Boolean()**. Check this out.
 
 Converting to a number? Easy peasy.
 
@@ -154,7 +158,7 @@ console.log(Boolean("Bazinga!")); // true
 console.log(Boolean("")); // false
 ```
 
-There's also this thing called bang (`!`), which is shorthand for converting to a boolean. You can use double bang (`!!`) as well.
+There's also this thing called bang (**!**), which is shorthand for converting to a boolean. You can use double bang (**!!**) as well.
 
 ```javascript
 console.log(!"Bazinga!"); // false - A bang sign
@@ -163,9 +167,12 @@ console.log(!!"Bazinga!"); // true - Double bang
 
 ## NaN: The quirkiest of them all
 
-So, what happens when JavaScript can't convert a string to a number? Well, it shows the "I give up" flag. So, `NaN` stands for "not a number". The irony? `NaN` is actually a number type. And here's a fun fact: `NaN == NaN` is false, because each NaN is unique.
+So, what happens when JavaScript can't convert a string to a number? 
+Well, it shows the "I give up" flag. So, **NaN** stands for "not a number". 
+The irony? **NaN** is actually a number type. And here's a fun fact: **NaN == NaN** is **false**,
+ because each **NaN** is unique.
 
-Remember the example with `parseInt` and `parseFloat`? I have mentioned that it removes non-numeric characters from the end. What happens when you try to coerce a value that indeed has numbers but starts with a string? It becomes `NaN`. Let's go through the examples:
+Remember the example with **parseInt** and **parseFloat**? I have mentioned that it removes non-numeric characters from the end. What happens when you try to coerce a value that indeed has numbers but starts with a string? It becomes **NaN**. Let's go through the examples:
 
 ```javascript
 console.log(typeof NaN); // "number" (yeah... no comment)
@@ -179,11 +186,11 @@ console.log(parseInt("Bazinga123")); // NaN
 
 Okay, here it is — JavaScript's type coercion in all its quirky glory. Sure, it can be confusing. Annoying? Of course. Fascinating? Duh.
 
-Also, let's not forget about some of the weirdly useful things we get. Who did not create a conditional using `if(str.length > 0)`? Exactly…
+Also, let's not forget about some of the weirdly useful things we get. Who did not create a conditional using **if(str.length > 0)**? Exactly…
 
-So, next time JavaScript surprises you with `NaN` or anything weird, take a breath. Pour yourself a glass of water, and remember: coercion is not out there to get you. It's just trying to be its weird self.
+So, next time JavaScript surprises you with **NaN** or anything weird, take a breath. Pour yourself a glass of water, and remember: coercion is not out there to get you. It's just trying to be its weird self.
 
-Also, a pro tip: Use `===` unless you enjoy existential crises.
+Also, a pro tip: Use **===** unless you enjoy existential crises.
 
 Till the next time, thanks!
 
