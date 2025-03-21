@@ -1,0 +1,216 @@
+---
+title: "Handling Asynchronous JavaScript: From callbacks to async/await"
+date: "2025-03-21"
+excerpt: "A comprehensive guide to handling asynchronous operations in JavaScript, from callbacks to modern async/await patterns."
+slug: "handling-asynchronous-javascript"
+readingTime: "6 min"
+tags: ["javascript", "web-development", "fundamentals", "nodejs"]
+---
+
+Have you ever found yourself cooking dinner after a brutal day? Nope, not the Instagram-ready, can't-eat-before-you-take-a-photo kind of meal. I'm talking about the "I am very hungry. I need food right now" kind.
+
+Imagine this: you put the pot to boil and move to the cutting board, which is full of veggies that need chopping. You notice that the chicken breast sizzling in the pan is one step away from turning into charcoal.
+
+This is similar to what JavaScript tries to do with asynchronous actions. It manages several tasks in the background while keeping the main thread free to take on a new task.
+
+## How does JavaScript manage all of the tasks?
+
+JavaScript is single-threaded. It means that it can do only one thing at a time. But here's the thing, it doesn't just stop to process the task before it moves to another. If it were, web apps would be… annoyingly blocked most of the time. Gladly, it uses something called event-loop. I am not going to dive deep into how the event loop works, but think of it as a well-organized waiter in a fancy restaurant. They take your order (task), pass it to the kitchen (background work), and move on to serve another table.
+
+## Callbacks
+
+This is the original way to manage asynchronous actions in JavaScript. A callback is just a function that is passed as an argument to another function to be executed later. Imagine we would like to check if we have the "Defence Against the Dark Arts" class today. Let's be real — it's one of the best classes.
+
+```javascript
+getWizard((wizard) => {
+  getAcademicCalendar(wizard.id, (calendar) => {
+    checkForDarkArtsClass(calendar);
+  });
+});
+```
+
+Callbacks got dunked on really hard for what we call callback hell. This infamous phrase describes a situation when we pass a function's result to another function... and another function, and so on. Keep in mind though, it does not mean that callbacks are bad. Just try to avoid the callback hell, okay?
+
+## Promises to the rescue
+
+Promises entered the scene to prevent the callback hell. A Promise represents the value that will be available in the future. It might either be resolved (success) or rejected (failure). With Promises, you can chain actions using .then() or .catch(), which eliminates the callback hell. The same example looks like this:
+
+```javascript
+getWizard()
+  .then((wizard) => getAcademicCalendar(wizard.id))
+  .then((calendar) => checkForDarkArtsClass(calendar))
+  .catch((error) => console.log('handle me instead of logging...', error))
+```
+
+Good to know: The Promises cannot be canceled. Once it is created, it's either resolved or rejected. No takesies backsies. However, we can use the AbortController to well.. abort the operation that Promise represents (like fetch), but not the Promise itself. Think of it as hanging up while talking to someone. The call (operation) breaks, but the phone (Promise) still exists, it just knows the call ended.
+
+## Async/Await: Syntactic Sugar for Promises
+
+Okay, so Promises is not the only step up from the callbacks. We also have the async await, which is Promises in a tuxedo. It allows you to write your asynchronous code, which looks a lot like synchronous.
+
+```javascript
+async function fetchData() {
+  try {
+    const wizard = await getWizard();
+    const calendar = await getAcademicCalendar(wizard.id);
+    const isDarkArtsClass = await checkForDarkArtsClass(calendar);
+  } catch (error) {
+    console.log('Handle me instead of logging...', error);
+  }
+}
+```
+
+This pattern goes hand in hand with the try catch blocks. It makes handling errors feel more natural. Overall, it's opinionated - some people love it, some people hate it. Personally, I think it helps with readability, but it's definitely not a magic fix for everything. The biggest downside? It's easy to fall into the trap of awaiting every single action, which is like baking cookies… but instead of using a full tray, you're putting one cookie in the oven at a time. Not exactly efficient.
+
+## Common challenges
+
+Okay, it's cool that we went through a bit of history and how handling asynchronous actions evolved over the years. But for now, it's like integrals in math. Cool to know, but not really useful in life.
+
+### When order matters
+
+We sort of already presented how this works, but let's actually stick to the real-life scenario where this might come in handy. Let's imagine the user signup flow:
+
+```javascript
+async function userSignUp(email, password) {  
+  try {  
+    // Check if email exists
+    const emailExists = await checkEmailInDatabase(email);  
+    if (emailExists) {
+      throw new Error("Email already registered");
+    };
+
+    // Email is unique, let's create a user
+    const user = await createUser(email, password);  
+
+    // Send the welcome email, we don't need to await it
+    await sendWelcomeEmail(user.id);
+
+    return user;
+  } catch (error) {
+    console.log('Handle me instead of logging!', error);
+  }  
+}  
+```
+
+This flow makes sense as those tasks need to happen in a particular order. Notice that not all of the tasks need to necessarily be awaited. Sending the welcome email might not be critical to finishing the signup process.
+
+### Parallel Execution: Multiple Chefs in the Kitchen
+
+Sometimes, you might want to run some calls simultaneously. Just like multiple chefs working on different dishes all at once. This might be useful in a number of scenarios. Let's imagine we would like to fetch some data for the dashboard:
+
+```javascript
+async function fetchDashboardData(userId) {  
+  try {  
+    // Fetch all independent data at once  
+    const [notifications, activity, latestPosts] = await Promise.all([
+      fetchNotifications(userId),
+      fetchActivity(userId),
+      fetchLatestPosts(userId),
+    ]);  
+
+    return {
+      notifications,
+      activity,
+      latestPosts,
+    };
+  } catch (error) {
+    console.log('Still logging errors, huh...', error);
+  }  
+} 
+```
+
+Using Promise.all speeds things up, but there's a catch. Do you know what happens if one promise fails? All of them fail. Sometimes it's exactly what you need, your choice. Or break the production, up to you.
+
+Okay, let's assume we are good to display the available data even if one promise fails (it's almost always good to display it). Let's use Promise.allSettled to get more resilience:
+
+```javascript
+export async function fetchDashboardData(userId) {
+  try {
+    const results = await Promise.allSettled([
+      fetchNotifications(userId),
+      fetchActivity(userId),
+      fetchLatestPosts(userId),
+    ]);
+
+    const [notifications, activity, latestPosts] = results.map(result => 
+      result.status === 'fulfilled' ? result.value : []
+    );
+
+    return {
+      notifications,
+      activity,
+      latestPosts,
+    };
+  } catch (error) {
+    console.log('Nope, still not handling errors', error);
+  }
+}
+```
+
+This way, even if one API call decides to take a last-minute sick day, you will still get whatever data is available.
+
+### Asynchronous Iteration
+
+Have you ever needed to process data from an asynchronous source? I did when I needed to generate some PDFs. Anyway, meet generators:
+
+```javascript
+async function* fetchTransactions(ids) {
+  for (const id of ids) {
+    yield fetchTransactionById(id); // fetch function
+  }
+}
+
+async function generateTransactionReport(pdfDoc, transactionIds) {
+  try {
+    for await (const transaction of fetchTransactions(transactionIds)) {
+      pdfDoc.addTransaction(transaction);
+    }
+  } catch (error) {
+    console.error('Error generating report:', error);
+  }
+}
+```
+
+This approach is perfect for scenarios where you don't want to wait for all data upfront.
+
+### Handling API Limits: The Cost of Parallelism (Don't Be Greedy!)
+
+Ever hit a "429 Too Many Requests" error? That happens when the client floods the API with requests. If you ever come across this, try batching your calls:
+
+```javascript
+async function createUsersAndSendEmails(users, batchSize = 5) {
+  const results = [];
+  
+  // Process users
+  for (let i = 0; i < users.length; i += batchSize) {
+    const batch = users.slice(i, i + batchSize);
+    
+    // using Promise.allSettled process the batch
+    const batchResults = await Promise.allSettled(
+      batch.map(async (userData) => {
+        try {
+          // Create a new user
+          const newUser = await createUser(userData);
+          // Send a welcome email
+          await sendWelcomeEmail(newUser.email);
+        } catch (error) {
+          // Log the error and return a standardized error object
+          console.log('This logging needs to stop...', error);
+        }
+      })
+    );
+    
+    results.push(...batchResults);
+  }
+  
+  return results;
+}
+```
+
+This prevents overwhelming the server. In your implementation, you might also want to consider retry mechanisms. Nevertheless, batching is like pacing yourself at the all-you-can-eat buffet.
+
+## Wrapping up
+
+Handling asynchronous operations has already been a long road. It all started with callbacks, and then Promises stepped into the game. Async Await is another chapter. Among all of them, it's important to know that each method has its trade-offs. The key takeaway should be that there is not one fit-it-all solution. Whether the task needs to be written sequentially or in parallel, understanding those patterns and deciding when to use them is crucial.
+
+Anyway, that's it. Thanks for reading, and happy coding!
