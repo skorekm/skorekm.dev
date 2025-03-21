@@ -2,6 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ThemeProvider } from "@/providers/theme-provider"
 import { Footer } from "@/components/ui/footer"
 import { Header } from "@/components/ui/header"
@@ -28,6 +29,7 @@ export default function RootLayout({
           <div className="flex-grow">
             <Header />
             {children}
+            <SpeedInsights />
           </div>
           <Footer />
         </ThemeProvider>
