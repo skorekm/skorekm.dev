@@ -1,10 +1,6 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
 
-// Get base URL from environment variable or use default
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-console.log(`Using base URL: ${baseUrl}\n`);
-
 try {
   // Check if axe-core is installed
   try {
@@ -16,32 +12,23 @@ try {
   }
 
   // Read URL paths
-  const paths = fs.readFileSync('./ops/urls.txt', 'utf8')
+  const urls = fs.readFileSync('./ops/urls.txt', 'utf8')
     .split('\n')
     .filter(path => path.trim() !== '');
 
   // Track overall results
   let hasFailures = false;
 
-  console.log('paths', paths);
+  console.log('paths', urls);
   // Test each URL
-  for (const path of paths) {
-    // Ensure path starts with /
-    const normalizedPath = path.startsWith('/') || path === '' ? path : `/${path}`;
-    console.log('normalizedPath', normalizedPath);
-    
-    // Build the test URL
-    const testUrl = normalizedPath === '' || normalizedPath === '/' 
-      ? baseUrl 
-      : `${baseUrl}${normalizedPath}`;
-    
+  for (const url of urls) {    
     console.log('====================================================');
-    console.log(`Testing: ${testUrl}`);
+    console.log(`Testing: ${url}`);
     console.log('====================================================');
     
     try {
       // Run axe on the URL
-      execSync(`axe "${testUrl}" --exit`, { stdio: 'inherit' });
+      execSync(`axe "${url}" --exit`, { stdio: 'inherit' });
     } catch (error) {
       console.log('error', error);
       // If axe finds issues, it will exit with non-zero code

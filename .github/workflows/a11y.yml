@@ -26,6 +26,8 @@ jobs:
 
       - name: Build Next.js app
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_URL: http://localhost:3000
 
       - name: Extract sitemap URL
         run: node ops/extract-sitemap-url.js
@@ -35,5 +37,3 @@ jobs:
 
       - name: Run accessibility tests
         run: node ops/run-a11y-tests.js
-        env:
-          BASE_URL: http://localhost:3000
