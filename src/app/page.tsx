@@ -25,9 +25,9 @@ export default async function Home() {
                         <span>{post.frontmatter.readingTime} read</span>
                       </span>
                     </div>
-                    <h3 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
+                    <h2 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
                       {post.frontmatter.title}
-                    </h3>
+                    </h2>
                   </div>
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">{post.frontmatter.excerpt}</p>
                   <div className="flex flex-wrap items-start gap-2">
