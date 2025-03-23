@@ -12,7 +12,7 @@ export default async function Home() {
     <>
       <main className="max-w-2xl mx-auto px-6 py-16 space-y-32">
         <section id="blog" className="space-y-12">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h2>
+          <h1 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h1>
           <div className="space-y-4">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {sortedPosts.map((post: any) => (
