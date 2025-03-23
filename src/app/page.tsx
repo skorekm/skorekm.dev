@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="max-w-2xl mx-auto px-6 py-16 space-y-32">
+      <main className="max-w-2xl mx-auto py-16 space-y-32">
         <section id="blog" className="space-y-12">
           <h1 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h1>
           <div className="space-y-4">
