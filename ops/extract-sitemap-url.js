@@ -20,6 +20,8 @@ try {
   // This works for basic sitemaps but might need adjustment for complex ones
   const urlRegex = /<loc>(.*?)<\/loc>/g;
   const matches = [...sitemapContent.matchAll(urlRegex)];
+
+  console.log('matches', matches);
   
   const urls = matches.map(match => match[1]);
   
