@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-// Path to the sitemap.xml file after build
 const sitemapPath = path.resolve(import.meta.dirname, '../.next/server/app/sitemap.xml.body');
 
 try {
