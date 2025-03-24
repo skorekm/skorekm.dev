@@ -14,6 +14,7 @@ export default async function Home() {
         <section id="blog" className="space-y-12">
           <h1 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h1>
           <div className="space-y-4">
+            test
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {sortedPosts.map((post: any) => (
               <Link key={post.frontmatter.slug} href={`/blog/${post.frontmatter.slug}`} className="block group">
