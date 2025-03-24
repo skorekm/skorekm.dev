@@ -10,9 +10,9 @@ export default async function Home() {
 
   return (
     <>
-      <main className="max-w-2xl mx-auto px-6 py-16 space-y-32">
+      <main className="max-w-2xl mx-auto py-16 space-y-32">
         <section id="blog" className="space-y-12">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h2>
+          <h1 className="text-2xl font-medium text-neutral-900 dark:text-neutral-50">Latest Posts</h1>
           <div className="space-y-4">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {sortedPosts.map((post: any) => (
@@ -25,9 +25,9 @@ export default async function Home() {
                         <span>{post.frontmatter.readingTime} read</span>
                       </span>
                     </div>
-                    <h3 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
+                    <h2 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
                       {post.frontmatter.title}
-                    </h3>
+                    </h2>
                   </div>
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">{post.frontmatter.excerpt}</p>
                   <div className="flex flex-wrap items-start gap-2">
