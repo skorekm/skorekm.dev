@@ -33,11 +33,6 @@ try {
     }
   }
 
-  // Summary
-  console.log('====================================================');
-  console.log('Accessibility testing complete.');
-  console.log('====================================================');
-
   // Exit with appropriate code
   process.exit(hasFailures ? 1 : 0);
 } catch (error) {

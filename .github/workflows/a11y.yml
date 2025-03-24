@@ -53,4 +53,4 @@ jobs:
         run: |
           echo "Running accessibility tests..."
           node ops/run-a11y-tests.js
-          echo "Accessibility tests finished."
+          echo "Accessibility tests completed."
