@@ -29,7 +29,8 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ github.ref_name }}-${{ hashFiles('**/package-lock.json', 'next.config.js') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', 'next.config.js') }}
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-nextjs-
 
       - name: Install dependencies
         run: npm ci
