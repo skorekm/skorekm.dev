@@ -16,10 +16,8 @@ try {
     .split('\n')
     .filter(path => path.trim() !== '');
 
-  // Track overall results
   let hasFailures = false;
 
-  console.log('paths', urls);
   // Test each URL
   for (const url of urls) {    
     console.log('====================================================');
@@ -31,7 +29,6 @@ try {
       execSync(`axe "${url}" --exit`, { stdio: 'inherit' });
     } catch (error) {
       console.log('error', error);
-      // If axe finds issues, it will exit with non-zero code
       hasFailures = true;
     }
   }
