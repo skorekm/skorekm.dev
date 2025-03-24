@@ -34,8 +34,6 @@ try {
       // If axe finds issues, it will exit with non-zero code
       hasFailures = true;
     }
-    
-    console.log('');
   }
 
   // Summary
