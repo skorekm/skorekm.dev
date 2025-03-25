@@ -4,10 +4,10 @@ export const Tag = ({ tag }: { tag: string }) => {
       key={tag}
       className="inline-flex items-center px-3 py-1 rounded-full 
         bg-accent/10 text-accent-foreground text-sm
-        transition-all duration-200 cursor-pointer
+        transition-all duration-200
         "
     >
-      #{tag}
+      {tag}
     </span>
   )
 }

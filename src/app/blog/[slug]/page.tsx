@@ -2,6 +2,7 @@ import { getPostBySlug, getPostsSlugs } from "@/lib/posts"
 import { getMdxById } from "@/lib/markdown"
 import { Tag } from "@/components/ui/tag";
 import { MdxContent } from "@/components/ui/mdx-content";
+import { formatDate } from "@/lib/utils";
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -12,8 +13,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <article className="space-y-8">
           <header className="space-y-6">
             <div className="flex items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
-              <time>{frontmatter.date}</time>
-              <span className="inline-flex items-center gap-1">
+              <time>Published on {formatDate(frontmatter.date)}</time>
+              <span className="block items-center gap-1">
                 <span>{frontmatter.readingTime} read</span>
               </span>
             </div>
