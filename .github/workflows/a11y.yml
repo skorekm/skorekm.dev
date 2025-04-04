@@ -36,7 +36,7 @@ jobs:
         run: npm ci
 
       - name: Install axe-core CLI
-        run: npm install -g @axe-core/cli
+        run: npm install -g @axe-core/cli && npx browser-driver-manager install chrome
 
       - name: Build Next.js app
         run: npm run build
