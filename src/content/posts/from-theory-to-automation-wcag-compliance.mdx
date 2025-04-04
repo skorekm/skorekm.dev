@@ -75,12 +75,15 @@ After the application is built, what is orchestrated in the workflow, I know the
 Side note: This step is opinionated, and it can be approached in a myriad of different ways.
 
 ```javascript
-#!/usr/bin/env node
+// ops/extract-sitemap-url.js
 import fs from 'fs';
 import path from 'path';
 
 // After build, sitemap is in the .next directory
-const sitemapPath = path.resolve(process.cwd(), '.next/server/app/sitemap.xml.body');
+const sitemapPath = path.resolve(
+  process.cwd(),
+  '.next/server/app/sitemap.xml.body'
+);
 
 try {
   // Make sure sitemap exists
@@ -133,7 +136,7 @@ try {
 Now that we do have the URLs parsed, it's time to run the axe-core against all of our paths. This is the final script that tests all the URLs and throws an error if accessibility issues are found.
 
 ```javascript
-#!/usr/bin/env node
+// ops/run-a11y-tests.js
 import fs from 'fs';
 import { execSync } from 'child_process';
 
@@ -207,16 +210,23 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/cache
           key: |
-            ${{ runner.os }}-nextjs-v1-${{ hashFiles('**/package-lock.json', 'next.config.js') }}
+            ${{ runner.os }}-nextjs-v1-${{ 
+              hashFiles('**/package-lock.json') 
+            }}-${{ 
+              hashFiles('next.config.js') 
+            }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-v1-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-nextjs-v1-${{ 
+              hashFiles('**/package-lock.json') 
+            }}
             ${{ runner.os }}-nextjs-v1-
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install axe-core CLI
-        run: npm install -g @axe-core/cli && npx browser-driver-manager install chrome
+        run: |
+            npm install -g @axe-core/cli
+            npx browser-driver-manager install chrome
 
       - name: Build Next.js app
         run: npm run build
