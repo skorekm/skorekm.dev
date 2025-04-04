@@ -4,9 +4,9 @@ import { getPostsSlugs } from '@/lib/posts';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const lastModified = new Date();
-  const posts = getPostsSlugs();
+  const postSlugs = getPostsSlugs();
 
-  const postsUrls = posts.map((post) => (
+  const postsUrls = postSlugs.map((post) => (
     {
       url: `${baseUrl}/blog/${post}`,
       lastModified,
