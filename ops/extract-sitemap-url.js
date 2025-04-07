@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-const sitemapPath = path.resolve(import.meta.dirname, '../.next/server/app/sitemap.xml.body');
+const sitemapPath = path.resolve(
+  import.meta.dirname,
+  '../.next/server/app/sitemap.xml.body'
+);
 
 try {
   // Check if the sitemap.xml file exists
