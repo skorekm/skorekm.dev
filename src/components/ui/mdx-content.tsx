@@ -4,7 +4,7 @@ import '@/styles/highlight-js/a11y-dark.css';
 
 export const mdxComponents = {
   pre: ({ children }: { children: React.ReactNode }) => {
-    return <pre tabIndex={0} className="p-0">{children}</pre>
+    return <pre tabIndex={0} className="p-0 overflow-y-auto overflow-x-auto">{children}</pre>
   }
 }
 
