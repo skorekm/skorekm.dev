@@ -9,7 +9,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const { frontmatter, content } = await getMdxById('posts', slug);
 
   return (
-      <main className="max-w-2xl mx-auto py-16">
+      <main className="max-w-2xl mx-auto py-16 px-3 lg:px-0">
         <article className="space-y-8">
           <header className="space-y-6">
             <div className="flex items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
