@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <main className="max-w-2xl mx-auto py-16">
+    <main className="max-w-2xl mx-auto py-16 px-3 lg:px-0">
       <section className="space-y-8">
         <h1 className="text-3xl font-medium text-neutral-900 dark:text-neutral-50">About Me</h1>
         <div className="prose prose-neutral dark:prose-invert max-w-none">
