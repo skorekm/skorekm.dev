@@ -4,7 +4,7 @@ import '@/styles/highlight-js/a11y-dark.css';
 
 export const mdxComponents = {
   pre: ({ children }: { children: React.ReactNode }) => {
-    return <pre className="p-0">{children}</pre>
+    return <pre className="p-0 overflow-y-auto">{children}</pre>
   }
 }
 
