@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 
 export const ScrollIndicator = () => {
-  // Calculate the percentage of the page scrolled
   const [scrollPercentage, setScrollPercentage] = useState(0);
 
   useEffect(() => {
