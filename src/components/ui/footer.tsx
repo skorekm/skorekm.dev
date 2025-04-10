@@ -2,7 +2,7 @@ import { SiMedium, SiX } from '@icons-pack/react-simple-icons';
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-[#e5e2dd] mt-auto dark:border-[#2a2a2a]">
+    <footer className="border-t border-[#e5e2dd] mt-auto dark:border-[#2a2a2a] px-3 lg:px-0">
       <div className="max-w-2xl mx-auto h-24 text-sm text-[#8c8c8c] dark:text-[#8c8c8c] flex justify-between items-center space-x-4">
         <div>© 2025 skorekm.dev. All rights reserved.</div>
         <div className="flex space-x-4">
