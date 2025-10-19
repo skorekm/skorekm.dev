@@ -1,3 +1,4 @@
+import { unstable_ViewTransition as ViewTransition } from "react";
 import { getPostBySlug, getPostsSlugs } from "@/lib/posts"
 import { getMdxById } from "@/lib/markdown"
 import { Tag } from "@/components/ui/tag";
@@ -13,16 +14,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <article className="space-y-8">
           <header className="space-y-6">
             <div className="flex items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
+              <ViewTransition name={`post-date-${slug}`}>
               <time>Published on {formatDate(frontmatter.date)}</time>
+              </ViewTransition>
+              <ViewTransition name={`post-reading-time-${slug}`}>
               <span className="block items-center gap-1">
-                <span>{frontmatter.readingTime} read</span>
-              </span>
+                  <span>{frontmatter.readingTime} read</span>
+                </span>
+              </ViewTransition>
             </div>
-            <h1 className="text-3xl font-medium text-neutral-900 dark:text-neutral-50">{frontmatter.title}</h1>
+            <ViewTransition name={`post-title-${slug}`}>
+              <h1 className="text-3xl font-medium text-neutral-900 dark:text-neutral-50">{frontmatter.title}</h1>
+            </ViewTransition>
             <div className="flex flex-wrap items-start gap-2">
-              {frontmatter.tags.map((tag: string) => (
-                <Tag key={tag} tag={tag} />
-              ))}
+              <ViewTransition name={`post-tags-${slug}`}>
+                {frontmatter.tags.map((tag: string) => (
+                  <Tag key={tag} tag={tag} />
+                ))}
+              </ViewTransition>
             </div>
           </header>
           <div className="prose prose-neutral dark:prose-invert max-w-none">

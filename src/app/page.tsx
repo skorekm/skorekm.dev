@@ -1,3 +1,4 @@
+import { unstable_ViewTransition as ViewTransition } from "react";
 import Link from "next/link"
 import { getPostsSlugs, getPostBySlug } from "@/lib/posts"
 import { Tag } from "@/components/ui/tag"
@@ -20,20 +21,28 @@ export default async function Home() {
                 <article className="group cursor-pointer space-y-4 rounded-lg p-4 -mx-4 transition-colors hover:bg-accent/25">
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
-                      <time>{post.frontmatter.date}</time>
+                      <ViewTransition name={`post-date-${post.frontmatter.slug}`}>
+                        <time>{post.frontmatter.date}</time>
+                      </ViewTransition>
                       <span className="inline-flex items-center gap-1">
-                        <span>{post.frontmatter.readingTime} read</span>
+                        <ViewTransition name={`post-reading-time-${post.frontmatter.slug}`}>
+                          <span>{post.frontmatter.readingTime} read</span>
+                        </ViewTransition>
                       </span>
                     </div>
-                    <h2 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
-                      {post.frontmatter.title}
-                    </h2>
+                    <ViewTransition name={`post-title-${post.frontmatter.slug}`}>
+                      <h2 className="text-xl font-medium text-[#2a2a2a] dark:text-[#f5f3f0] group-hover:text-accent-foreground transition-colors">
+                        {post.frontmatter.title}
+                      </h2>
+                    </ViewTransition>
                   </div>
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">{post.frontmatter.excerpt}</p>
                   <div className="flex flex-wrap items-start gap-2">
-                    {post.frontmatter.tags.map((tag: string) => (
-                      <Tag key={tag} tag={tag} />
-                    ))}
+                    <ViewTransition name={`post-tags-${post.frontmatter.slug}`}>
+                      {post.frontmatter.tags.map((tag: string) => (
+                        <Tag key={tag} tag={tag} />
+                      ))}
+                    </ViewTransition>
                   </div>
                 </article>
               </Link>
